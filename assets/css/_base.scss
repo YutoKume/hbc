@@ -1,0 +1,46 @@
+html {
+  font-size: 62.5%;
+}
+body {
+  margin: 0;
+}
+
+header {
+  width: 100%;
+  min-width: 768px;
+  height: 90px;
+  box-sizing: border-box;
+  background: #fff;
+  border-bottom: 5px solid #d5d5d5;
+  color: #474747;
+  padding: 0;
+}
+footer {
+  padding: 15px 0;
+  background: #292929; /*任意の色*/
+  color: #fff; /*任意の色*/
+  font-size: 1.2rem; /*12px相当*/
+  text-align: center;
+  @media print, screen and (min-width: 768px) {
+    padding: 25px 0;
+  }
+}
+address {
+  font: inherit;
+  line-height: 20px;
+}
+
+main#ichan {
+  font-size: 1.6rem;
+  font-family: 'yu-gothic-pr6n', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  *,
+  *:after,
+  *:before {
+    box-sizing: border-box;
+  }
+  img {
+    vertical-align: bottom;
+  }
+}
