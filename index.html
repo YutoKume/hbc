@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
   <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
     <title>いっちゃんおいしいHBC｜HBC北海道放送</title>
     <meta property="og:title" content="いっちゃんおいしいHBC｜HBC北海道放送">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="ページURL">
+    <meta property="og:url" content="https://www.hbc.co.jp/1ch-oishii/">
     <meta property="og:image" content="assets/img/ogp.jpg">
     <meta property="og:site_name" content="ＨＢＣ　北海道放送">
     <meta property="og:description" content="食は、北海道の魅力であり課題でもある。だから、HBCはとことん掘り下げる。" />
@@ -21,8 +21,6 @@
     <link rel="stylesheet" href="https://www.hbc.co.jp/css/top/g_menu.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <meta name="robots" content="noindex,nofollow">
 
     <link rel="stylesheet" href="assets/css/style.min.css">
 
@@ -75,6 +73,7 @@
       })(window, document, 'script', 'dataLayer', 'GTM-5XPXCVX');
     </script>
     <!-- End Google Tag Manager -->
+    <meta name="robots" content="noindex,nofollow">
 
   </head>
 
@@ -122,21 +121,21 @@
             </h1>
             <p class="statement__body-copy">
               <span>温暖化のこと。物価高のこと。輸出のこと。</span>
-              <span>世界で起こることが、北海道の食につながっている。</span>
+              <span>世界で起こることが、<wbr>北海道の食につながっている。</span>
               <span>大きな視点でニュースを語るのもだいじだけれど、</span>
               <span>半径10メートルで起きる話題こそ伝えたい。</span>
-              <span>地元で愛されているのに、人材不足に苦しむ店主がいる。</span>
+              <span>地元で愛されているのに、<wbr>人材不足に苦しむ店主がいる。</span>
               <span>子ども食堂で “居場所” をつくる人がいる。</span>
               <span>まだない食材の開発に挑む研究者がいる。</span>
               <span>DXと加工技術で販路を世界に広げる農家がいる。</span>
-              <span>動物愛護と“食べていく”のバランスに悩む人がいる。</span>
+              <span>動物愛護と“食べていく”の<wbr>バランスに悩む人がいる。</span>
               <span>地元素材を調理して価値と雇用を生む工場がある。</span>
-              <span>そう、北海道は<br>「つくる」と「食べる」でできている。</span>
-              <span>消費してるだけの「消費者」なんて、きっといない。</span>
-              <span>いろんな立場の人が集えば、学び合いが生まれる。</span>
-              <span>地元メディアHBCがつくるのは、学びコミュニティ。</span>
-              <span>「メディア」の本来の意味である「媒介」となって、</span>
-              <span>わたしたちは、食の北海道ブランドをバックアップする。</span>
+              <span>そう、北海道は<wbr>「つくる」と「食べる」でできている。</span>
+              <span>消費してるだけの「消費者」なんて、<wbr>きっといない。</span>
+              <span>いろんな立場の人が集えば、<wbr>学び合いが生まれる。</span>
+              <span>地元メディアHBCがつくるのは、<wbr>学びコミュニティ。</span>
+              <span>「メディア」の本来の意味である<wbr>「媒介」となって、</span>
+              <span>わたしたちは、<wbr>食の北海道ブランドを<wbr>バックアップする。</span>
               <span>食べるも、つくるも、広めるも。</span>
               <span>北海道の食の未来に光を。</span>
             </p>
@@ -162,6 +161,10 @@
       document.addEventListener("DOMContentLoaded", (event) => {
         openingControl();
         statementCatchCopyControl();
+      });
+
+      window.addEventListener('resize', function () {
+        statementBodyCopyControl();
       });
 
       let initialScrollDetected = false;
@@ -229,7 +232,7 @@
         }
 
         function onPlayerReady(event) {
-          event.target.playVideo(); // 明示的に動画の再生を開始
+          event.target.playVideo();
         }
 
         function onPlayerStateChange(event) {
@@ -261,11 +264,6 @@
               y: 0,
               duration: 0.8
             }, '-=0.2')
-          // const openingContainer = document.getElementById('opening');
-          // openingContainer.classList.add('is-hidden');
-          // setTimeout(function () {
-          //   videoContainer.style.display = 'none';
-          // }, 800);
         }
 
         function skipVideo() {
@@ -280,29 +278,24 @@
               y: 0,
               duration: 0.8
             }, '-=0.2')
-          // const openingContainer = document.getElementById('opening');
-          // openingContainer.classList.add('is-hidden');
-          // setTimeout(function () {
-          //   videoContainer.style.display = 'none';
-          // }, 800);
         }
 
       }
 
       function statementCatchCopyControl() {
-        gsap.to('.statement__catch-copy', {
+        const target = '.statement__catch-copy';
+        gsap.to(target, {
           scrollTrigger: {
-            trigger: '.statement__catch-copy',
+            trigger: target,
             start: 'center 60%',
             end: 'bottom top',
-            onEnter: () => gsap.to('.statement__catch-copy', {
+            onEnter: () => gsap.to(target, {
               autoAlpha: 1,
             }),
-            onLeave: () => gsap.to('.statement__catch-copy', {}),
-            onEnterBack: () => gsap.to('.statement__catch-copy', {
+            onEnterBack: () => gsap.to(target, {
               autoAlpha: 1,
             }),
-            onLeaveBack: () => gsap.to('.statement__catch-copy', {
+            onLeaveBack: () => gsap.to(target, {
               autoAlpha: 0,
             }),
           }
@@ -310,13 +303,14 @@
       }
 
       function getStartValue() {
-        // 画面が横長の場合は 'top 55%'、縦長の場合は 'top 70%' を返す
         return window.innerWidth > window.innerHeight ? 'top 55%' : 'top 70%';
       }
 
       function statementBodyCopyControl() {
+        ScrollTrigger.getAll().forEach(st => st.kill());
+        ScrollTrigger.refresh();
+
         const target = gsap.utils.toArray('.statement__body-copy > span');
-        gsap.registerPlugin(ScrollTrigger)
         target.forEach(target => {
           gsap.to(target, {
             scrollTrigger: {
@@ -326,7 +320,6 @@
               onEnter: () => gsap.to(target, {
                 autoAlpha: 1,
               }),
-              onLeave: () => gsap.to(target, {}),
               onEnterBack: () => gsap.to(target, {
                 autoAlpha: 1,
               }),
