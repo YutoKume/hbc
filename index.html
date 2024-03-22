@@ -110,8 +110,10 @@
                 type="video/webm">
               <source media="(orientation: landscape)" src="assets/video/opening_landscape.webm" alt="いっちゃんおいしいHBC"
                 type="video/webm">
-              <source media="(orientation: portrait)" src="assets/video/opening_portrait.mp4" alt="いっちゃんおいしいHBC"
-                type="video/mp4">
+              <source media="(orientation: portrait) and (min-width: 768px)"
+                src="assets/video/opening_portrait-high.mp4" alt="いっちゃんおいしいHBC" type="video/mp4">
+              <source media="(orientation: portrait) and (max-width: 767px)" src="assets/video/opening_portrait-low.mp4"
+                alt="いっちゃんおいしいHBC" type="video/mp4">
               <source media="(orientation: landscape)" src="assets/video/opening_landscape.mp4" alt="いっちゃんおいしいHBC"
                 type="video/mp4">
             </video>
