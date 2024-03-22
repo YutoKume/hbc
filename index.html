@@ -19,10 +19,10 @@
     <link rel="icon" type="image/x-icon" href="https://www.hbc.co.jp/image/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="https://www.hbc.co.jp/image/apple-touch-icon.png">
     <link rel="stylesheet" href="https://www.hbc.co.jp/css/top/g_menu.css">
+    <link rel="stylesheet" href="assets/css/style.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="assets/css/style.min.css">
 
     <script>
       (function (d) {
@@ -82,12 +82,13 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5XPXCVX" height="0" width="0"
         style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+
     <nav>
       <script src="https://www.hbc.co.jp/java_scripts/g_menu_s.js"></script>
       <script src="https://www.hbc.co.jp/java_scripts/g_menu_script.js"></script>
     </nav>
 
-    <main id="ichan" role="main">
+    <main id="oishii" role="main">
       <div id="sound-button" class="sound-attention">
         <div class="sound-attention__overflow">
           <div class="sound-attention__container">
@@ -105,8 +106,16 @@
       <div id="opening" class="opening" style="display: none;">
         <div class="opening__overflow">
           <div class="opening__container">
-            <video id="opening-video" class="opening-video" webkit-playsinline playsinline preload="metadata"></video>
-            <!-- <div id="opening-video"></div> -->
+            <video id="video" class="opening__video" webkit-playsinline playsinline preload="metadata">
+              <source media="(orientation: portrait)" src="assets/video/opening_portrait.webm" alt="いっちゃんおいしいHBC"
+                type="video/webm">
+              <source media="(orientation: landscape)" src="assets/video/opening_landscape.webm" alt="いっちゃんおいしいHBC"
+                type="video/webm">
+              <source media="(orientation: portrait)" src="assets/video/opening_portrait.mp4" alt="いっちゃんおいしいHBC"
+                type="video/mp4">
+              <source media="(orientation: landscape)" src="assets/video/opening_landscape.mp4" alt="いっちゃんおいしいHBC"
+                type="video/mp4">
+            </video>
           </div>
         </div>
       </div>
@@ -124,11 +133,11 @@
               <span>温暖化のこと。物価高のこと。輸出のこと。</span>
               <span>世界で起こることが、<wbr>北海道の食につながっている。</span>
               <span>大きな視点でニュースを<wbr>語るのもだいじだけれど、</span>
-              <span>半径10メートルで起きる話題こそ伝えたい。</span>
+              <span>半径10メートルで<wbr>起きる話題こそ伝えたい。</span>
               <span>地元で愛されているのに、<wbr>人材不足に苦しむ店主がいる。</span>
               <span>子ども食堂で “居場所” をつくる人がいる。</span>
-              <span>まだない食材の開発に挑む研究者がいる。</span>
-              <span>DXと加工技術で販路を世界に広げる農家がいる。</span>
+              <span>まだない食材の開発に<wbr>挑む研究者がいる。</span>
+              <span>DXと加工技術で販路を<wbr>世界に広げる農家がいる。</span>
               <span>動物愛護と“食べていく”の<wbr>バランスに悩む人がいる。</span>
               <span>地元素材を調理して<wbr>価値と雇用を生む工場がある。</span>
               <span>そう、北海道は<wbr>「つくる」と「食べる」でできている。</span>
@@ -144,7 +153,7 @@
         </div>
         <div class="visual">
           <div class="visual__comment">
-            <img src="assets/img/start.png" alt="">
+            <img src="assets/img/kv_comment.png" alt="">
           </div>
           <img class="visual__image" src="assets/img/kv_main.webp" alt="">
         </div>
@@ -161,35 +170,33 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
-      gsap.registerPlugin(ScrollTrigger);
       document.addEventListener("DOMContentLoaded", (event) => {
+        gsap.registerPlugin(ScrollTrigger);
+
         openingControl();
         statementCatchCopyControl();
         let initialScrollDetected = false;
-        window.addEventListener("scroll", () => {
+
+        window.addEventListener('scroll', () => {
           if (!initialScrollDetected) {
             initialScrollDetected = true;
+
             statementBodyCopyControl();
             visualCommentControl();
           }
         }, {
           once: true
-        }); // イベントリ
+        });
       });
 
       let lastWidth = window.innerWidth;
-      let lastHeight = window.innerHeight;
       window.addEventListener('resize', function () {
-        // 現在のウィンドウサイズを取得
-        let newWidth = window.innerWidth;
-        let newHeight = window.innerHeight;
-
-        // 幅または高さが変更されたかどうかをチェック
-        if (newWidth !== lastWidth || newHeight !== lastHeight) {
+        if (lastWidth != window.innerWidth) {
+          lastWidth = window.innerWidth;
+          ScrollTrigger.getAll().forEach(st => st.kill());
+          ScrollTrigger.refresh();
           statementBodyCopyControl();
           visualCommentControl();
-          lastWidth = newWidth;
-          lastHeight = newHeight;
         }
       });
 
@@ -201,7 +208,6 @@
         const soundOff = document.getElementById('sound-off');
         const skip = document.getElementById('skip');
         const openingContainer = document.getElementById('opening');
-        const videoContainer = document.getElementById('opening-video');
 
         soundOn.addEventListener('click', function () {
           loadVideo(true);
@@ -217,22 +223,19 @@
           soundButtons.style.display = 'none';
           openingContainer.style.display = 'block';
 
-          var video = document.getElementById("opening-video");
-          var aspectRatio = window.innerWidth / window.innerHeight;
-          var videoSource = aspectRatio > 1 ? "assets/video/opening_desktop.mp4" : "assets/video/opening_mobile.mp4";
+          const video = document.getElementById('video');
+          let aspectRatio = window.innerWidth / window.innerHeight;
 
-          video.src = videoSource;
           video.muted = !sound;
           video.load();
           video.play();
 
-          let executed = false; // 処理が実行されたかどうかを追跡するフラグ
+          let executed = false;
           video.onloadedmetadata = function () {
             video.addEventListener('timeupdate', function () {
               const remainingTime = video.duration - video.currentTime;
               const triggerTime = 1.75;
 
-              // 終了n秒前に一度だけ特定の処理を実行
               if (remainingTime <= triggerTime && !executed) {
                 executed = true;
                 hiddenVideo();
@@ -280,46 +283,31 @@
       function statementCatchCopyControl() {
         const target = '.statement__catch-copy';
         gsap.to(target, {
+          autoAlpha: 1,
           scrollTrigger: {
             trigger: target,
             start: 'center 60%',
             end: 'bottom top',
-            onEnter: () => gsap.to(target, {
-              autoAlpha: 1,
-            }),
-            onEnterBack: () => gsap.to(target, {
-              autoAlpha: 1,
-            }),
-            onLeaveBack: () => gsap.to(target, {
-              autoAlpha: 0,
-            }),
+            toggleActions: 'play play none reverse',
           }
         })
       }
 
-      function getStartValue() {
+      function startPosition() {
         return window.innerWidth > window.innerHeight ? 'top 55%' : 'top 70%';
       }
 
       function statementBodyCopyControl() {
-        ScrollTrigger.getAll().forEach(st => st.kill());
-        ScrollTrigger.refresh();
         const target = gsap.utils.toArray('.statement__body-copy > span');
         target.forEach(target => {
           gsap.to(target, {
+            autoAlpha: 1,
+            y: 0,
             scrollTrigger: {
               trigger: target,
-              start: getStartValue(),
+              start: startPosition(),
               end: 'bottom top',
-              onEnter: () => gsap.to(target, {
-                autoAlpha: 1,
-              }),
-              onEnterBack: () => gsap.to(target, {
-                autoAlpha: 1,
-              }),
-              onLeaveBack: () => gsap.to(target, {
-                autoAlpha: 0,
-              }),
+              toggleActions: 'play play none reverse',
             }
           })
         });
@@ -330,10 +318,11 @@
         gsap.to(target, {
           autoAlpha: 1,
           y: 0,
+          duration: 0.3,
           scrollTrigger: {
             trigger: '.kv',
             start: 'bottom bottom',
-            toggleActions: 'play none none reverse'
+            toggleActions: 'play play none reverse'
           }
         })
       }

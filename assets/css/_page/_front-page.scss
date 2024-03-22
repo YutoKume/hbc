@@ -24,7 +24,7 @@
     top: 0;
     left: 0;
   }
-  #opening-video {
+  &__video {
     width: 56.25vh; /* 9:16のアスペクト比に基づいて高さから幅を計算 */
     width: 56.25lvh;
     height: 177.77777778vw; /* 9:16のアスペクト比に基づいて幅から高さを計算 */
@@ -240,6 +240,7 @@
     > span {
       display: block;
       opacity: 0;
+      transform: translateY(5px);
       word-break: keep-all;
       overflow-wrap: anywhere;
       > br {
@@ -249,18 +250,6 @@
         }
       }
     }
-  }
-}
-
-.start {
-  width: 90%;
-  margin: 40px auto 70px;
-  position: relative;
-  z-index: 10;
-  &__image {
-    display: block;
-    width: 170px;
-    height: auto;
   }
 }
 
