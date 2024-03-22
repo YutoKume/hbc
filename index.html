@@ -105,7 +105,8 @@
       <div id="opening" class="opening" style="display: none;">
         <div class="opening__overflow">
           <div class="opening__container">
-            <div id="opening-video"></div>
+            <video id="opening-video" class="opening-video" webkit-playsinline playsinline preload="metadata"></video>
+            <!-- <div id="opening-video"></div> -->
           </div>
         </div>
       </div>
@@ -216,52 +217,28 @@
           soundButtons.style.display = 'none';
           openingContainer.style.display = 'block';
 
-          function getVideoIdByAspectRatio() {
-            const aspectRatio = window.innerWidth / window.innerHeight;
-            if (aspectRatio >= 16 / 9) {
-              return 'EN4LQztoi3M?si=raAEQ0SZ6AsMuS3L';
-            } else {
-              return 'rnOEwOfxhKU?si=_LcapdVjVHDi6--o';
-            }
-          }
-          const videoId = getVideoIdByAspectRatio();
-          player = new YT.Player(videoContainer, {
-            height: '100%',
-            width: '100%',
-            videoId: videoId,
-            playerVars: {
-              autoplay: 1,
-              controls: 0,
-              rel: 0,
-              showinfo: 0,
-              modestbranding: 1,
-              loop: 0,
-              //end: 17,
-              mute: sound ? 0 : 1,
-            },
-            events: {
-              'onReady': onPlayerReady,
-              'onStateChange': onPlayerStateChange
-            }
-          });
-        }
+          var video = document.getElementById("opening-video");
+          var aspectRatio = window.innerWidth / window.innerHeight;
+          var videoSource = aspectRatio > 1 ? "assets/video/opening_desktop.mp4" : "assets/video/opening_mobile.mp4";
 
-        function onPlayerReady(event) {
-          event.target.playVideo();
-        }
+          video.src = videoSource;
+          video.muted = !sound;
+          video.load();
+          video.play();
 
-        function onPlayerStateChange(event) {
-          if (event.data === YT.PlayerState.PLAYING) {
-            const openingElements = document.querySelectorAll('.opening');
-            openingElements.forEach(function (element) {
-              element.style.pointerEvents = 'none';
+          let executed = false; // 処理が実行されたかどうかを追跡するフラグ
+          video.onloadedmetadata = function () {
+            video.addEventListener('timeupdate', function () {
+              const remainingTime = video.duration - video.currentTime;
+              const triggerTime = 1.75;
+
+              // 終了n秒前に一度だけ特定の処理を実行
+              if (remainingTime <= triggerTime && !executed) {
+                executed = true;
+                hiddenVideo();
+              }
             });
-            const duration = player.getDuration();
-            const fadeOutDelay = (duration - 1.75) > 0 ? (duration - 1.75) * 1000 : 0;
-            if (!fadeOutTimer) {
-              fadeOutTimer = setTimeout(hiddenVideo, fadeOutDelay);
-            }
-          }
+          };
         }
 
         function hiddenVideo() {
