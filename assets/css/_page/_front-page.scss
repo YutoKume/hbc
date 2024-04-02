@@ -5,11 +5,12 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  height: 100lvh;
   overflow: hidden;
   background: linear-gradient(to bottom, #fff, var(--color-cream));
   z-index: 1000;
-  //pointer-events: none;
+  pointer-events: none;
   &__overflow {
     width: 100%;
     height: 100%;
@@ -23,19 +24,17 @@
     top: 0;
     left: 0;
   }
-  #opening-video {
-    width: 100%;
-    height: 100%;
-    // width: 56.25vh; /* 9:16のアスペクト比に基づいて高さから幅を計算 */
-    // width: 56.25lvh;
-    // height: 177.77777778vw; /* 9:16のアスペクト比に基づいて幅から高さを計算 */
-    // min-height: 100%;
-    // min-width: 100%;
+  &__video {
+    width: 56.25vh; /* 9:16のアスペクト比に基づいて高さから幅を計算 */
+    width: 56.25lvh;
+    height: 177.77777778vw; /* 9:16のアスペクト比に基づいて幅から高さを計算 */
+    min-height: 100%;
+    min-width: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate3D(-50%, -50%, 0);
-    @media screen and (landscape) {
+    @media screen and (orientation: landscape) {
       width: 177.77777778vh;
       width: 177.77777778lvh;
       height: 56.25vw;
@@ -241,6 +240,7 @@
     > span {
       display: block;
       opacity: 0;
+      transform: translateY(5px);
       word-break: keep-all;
       overflow-wrap: anywhere;
       > br {
@@ -250,18 +250,6 @@
         }
       }
     }
-  }
-}
-
-.start {
-  width: 90%;
-  margin: 40px auto 70px;
-  position: relative;
-  z-index: 10;
-  &__image {
-    display: block;
-    width: 170px;
-    height: auto;
   }
 }
 
